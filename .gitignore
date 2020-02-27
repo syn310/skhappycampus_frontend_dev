@@ -6,4 +6,4 @@
 yarn.lock
 
 #devTest
-/src/lib/devtest.js
+#/src/lib/devtest.js

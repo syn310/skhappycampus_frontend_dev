@@ -18,7 +18,7 @@ module.exports = {
         contentBase: __dirname + '/dist/',
         proxy: {
           '/nice': {
-            target: 'http://192.168.0.10:8081', //nice
+            target: 'http://localhost:8081', //nice
                 secure: false,
                 changeOrigin: true,
            },
