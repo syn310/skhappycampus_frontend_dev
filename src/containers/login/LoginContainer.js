@@ -124,8 +124,7 @@ class LoginContainer extends Component {
                             <h3>로그인</h3>
                         </div>
                         <div className="login_area">
-                            <div>서비스를 잠시 중단합니다.</div>
-                            {/*
+                            
                             <div className="inpt_field v2 ">
                                     <input className="text_inpt_50 v2" type="text" name="inputId" placeholder="아이디" onChange={handleInputChange}/><span> @ </span>
                                     {
@@ -154,11 +153,7 @@ class LoginContainer extends Component {
                                 <div className="login_btn" onClick={handleMoveToRegister}><span>회원가입</span></div>
                                 <div className="login_btn" onClick={handleClickLogin}><span>로그인</span></div>
                             </div>
-                                */}
-                            <div className="login_below_comment">
-                                <div>비밀번호 찾기 등의 관련 문의시 담당자 연락바랍니다</div>
-                                <div>(연락처 : lee.sangil@sk.com)</div>
-                            </div>
+                            
                         </div>
                     </div>
                 </div>
