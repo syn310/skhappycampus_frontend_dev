@@ -39,8 +39,8 @@ class ApprovalContainer extends Component {
         
         const Stomp = require("stompjs/lib/stomp.js").Stomp
         var SockJS = require('sockjs-client') 
-        SockJS = new SockJS('https://www.skhappycampus.com/auth/sv-websocket?token='+ userId)
-        //SockJS = new SockJS('http://192.168.0.10:8081/sv-websocket?token='+userId) 
+        //SockJS = new SockJS('https://www.skhappycampus.com/auth/sv-websocket?token='+ userId)
+        SockJS = new SockJS('http://localhost:8081/sv-websocket?token='+userId) 
         stompClient = Stomp.over(SockJS); 
         stompClient.connect({}, this.onConnected, this.onError); 
  
@@ -310,8 +310,8 @@ class ApprovalContainer extends Component {
         //nice 정보 가져오기
         axios({
             method:"post",
-            //url:"/nice/", //개발용
-            url:"https://www.skhappycampus.com/auth/nice/", //운영용
+            url:"/nice/", //개발용
+            //url:"https://www.skhappycampus.com/auth/nice/", //운영용
             // headers: {  "Pragma": 'no-cache',
             //             "x-access-token": storage.getToken() },
             data:{

@@ -221,7 +221,9 @@ class SelectCompanyPopup extends Component {
                         clickedCompany ? 
                             <div>
                                 {/* {clickedCompany}로 조회한 회사정보를 보여줌 */}
-                                {generateCompanyInfo(this.state.companyList.filter((obj)=>{ return obj.companyId=== parseInt(clickedCompany) })[0])}
+                                {console.log(clickedCompany)}
+                                {console.log(this.state.companyList.filter((obj)=>{ return obj.companyId=== clickedCompany })[0])}
+                                {generateCompanyInfo(this.state.companyList.filter((obj)=>{ return obj.companyId=== clickedCompany })[0])}
                                 <div className="popup_button_area">
                                     <button className="popup_button_btn" onClick={clickselect}>지원하기</button>
                                 </div>

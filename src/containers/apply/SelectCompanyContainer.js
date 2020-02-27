@@ -247,8 +247,9 @@ class SelectCompanyContainer extends Component {
 
         const { userInfo } = this.state;
         const { ApplyActions, MenuActions, AuthActions } = this.props;
-        //console.log("userInfo",userInfo)
+        console.log("userInfo",userInfo)
         const self = this;
+
 
         axios({
             url:devtest() + `/companyRecruit/${userInfo.serialNumber}`,
@@ -257,6 +258,8 @@ class SelectCompanyContainer extends Component {
                         "x-access-token": storage.getToken() }
          }).then(
               (res)=>{
+                  console.log('$$$$$$$$$$$$$$$$')
+                  console.log(res.data)
                   if(res.data){
                       storage.setSessionObj(res.headers);
                       ApplyActions.setCompanyList(res.data);
