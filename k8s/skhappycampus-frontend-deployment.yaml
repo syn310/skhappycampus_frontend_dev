@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
       - name: skhappycampus-frontend
-        image: mgmtsv-registry.cloudzcp.io/skhappycampus/skhappycampus-frontend:1
+        image: skcc-happycam-registry.cloudzcp.io/skhappycampus/skhappycampus-frontend:1
         ports: 
         - containerPort: 80
         imagePullPolicy: Always
