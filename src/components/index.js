@@ -14,6 +14,7 @@ import CompanyList from './company/CompanyList';
 import CompanyPopup from './company/CompanyPopup';
 
 import IntroImg from './intro/IntroImg';
+import IntroPopup from './intro/IntroPopup';
 
 import ApplyForm from './apply/ApplyForm';
 import QualifiedCheck from './apply/QualifiedCheck';
@@ -36,6 +37,12 @@ import Footer from './block/Footer';
 import FooterPopup from './block/FooterPopup';
 import NoticePopup from './notice/NoticePopup';
 
+// Surim
+import BookList from './book/BookList';
+import BookPopup from './book/BookPopup';
+import MyBook from './mypage/MyBook';
+import MyBookNotFound from './mypage/MyBookNotFound';
+
 export {
   ApplyForm,
   QuestionForm,
@@ -51,6 +58,7 @@ export {
   CompanyList,
   CompanyPopup,
   IntroImg,
+  IntroPopup,
   QualifiedCheck,
   Agreement,
   RegistForm,
@@ -66,4 +74,9 @@ export {
   RegistDegreeInfo,
   RegistExtraCert,
   NoticePopup,
+
+  BookList,
+  BookPopup,
+  MyBook,
+  MyBookNotFound
 }
