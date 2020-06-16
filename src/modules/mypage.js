@@ -8,6 +8,7 @@ const SET_MY_APPLY_LIST = 'mypage/SET_MY_APPLY_LIST';
 const TOGGLE_VISIBLE = 'mypage/TOGGLE_VISIBLE';
 const SET_MY_CHOICE_LIST = 'mypage/SET_MY_CHOICE_LIST';
 const SET_COVER_LETTER = 'resume/SET_COVER_LETTER';
+const SET_MY_BOOK_LIST = 'mapage/SET_MY_BOOK_LIST';
 
 /*
  * 액션 생성 함수 정의
@@ -16,11 +17,13 @@ export const setMyApplyList = createAction(SET_MY_APPLY_LIST);
 export const toggleVisible = createAction(TOGGLE_VISIBLE);
 export const setMyChoiceList = createAction(SET_MY_CHOICE_LIST);
 export const setCoverLetter = createAction(SET_COVER_LETTER);
+export const setMyBookList = createAction(SET_MY_BOOK_LIST);
 
 const initialState = Map({
     myApplyList: [],
     myChoiceList: [],
-    coverLetter: ''
+    coverLetter: '',
+    myBookList: []
 });
 
 
@@ -37,5 +40,9 @@ export default handleActions({
         return state.set("coverLetter", action.payload);
 
     },
+
+    [SET_MY_BOOK_LIST] : (state, action) => {
+        return state.set("myBookList", action.payload);
+    }
 
 }, initialState);

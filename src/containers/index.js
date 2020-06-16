@@ -27,6 +27,9 @@ import UnauthRoute from './common/UnauthRoute';
 import MyPasswordContainer from './mypage/MyPasswordContainer';
 import NoticeContainer from './notice/NoticeContainer';
 
+// sample
+import BookContainer from './book/BookContainer';
+
 export {
   ApplyContainer,
   MyApplyContainer,
@@ -54,6 +57,8 @@ export {
   AuthRoute,
   UnauthRoute,
   MyPasswordContainer,
-  NoticeContainer
+  NoticeContainer,
+
+  BookContainer
 
 }

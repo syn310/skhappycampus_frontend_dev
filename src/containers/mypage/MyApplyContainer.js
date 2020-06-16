@@ -6,7 +6,7 @@ import * as MyQuestionActions from 'modules/myquestion';
 import * as authActions from 'modules/auth';
 import { bindActionCreators } from 'redux';
 import axios from 'axios';
-import {MyApplyStatus, MyApplyNotFound, MyApplyPopup, MyQuestion, MyQuestionNotFound, MyQuestionPopup, MyPassword, MyNoticePopup} from 'components';
+import {MyApplyStatus, MyApplyNotFound, MyApplyPopup, MyQuestion, MyQuestionNotFound, MyQuestionPopup, MyPassword, MyNoticePopup, MyBook, MyBookNotFound} from 'components';
 import storage from 'lib/storage';
 import devtest from 'lib/devtest';
 
@@ -23,7 +23,7 @@ class MyApplyContainer extends Component {
           openNoticePopup: false, //개인별 공지사항 팝업 open여부
           myApplyResultList: [],
           clickedNotice: {},
-          noticeInfo: {}           //개인별 공지사항 내용
+          noticeInfo: {},           //개인별 공지사항 내용
         }
     }
 
@@ -37,6 +37,7 @@ class MyApplyContainer extends Component {
         })
         //나의 지원현황 조회
         this.handleGetMyApplyList();
+        
     }
     /* 사용자의 지원 리스트 조회 */
     handleGetMyApplyList = () => {
@@ -55,6 +56,8 @@ class MyApplyContainer extends Component {
                     storage.setSessionObj(res.headers);
                     // 2차 오픈시 주석 해제하세요
                     this.handleGetMyQuestionList();
+                    //나의 찜한 책 조회
+                    this.handleGetMyBookList();
                     
                     MypageActions.setMyApplyList(res.data);
             }
@@ -458,17 +461,120 @@ class MyApplyContainer extends Component {
     handleMoveToMyPassword= () => {
         this.props.history.push(`/mypass`);
     }
+    /** 내가 찜한 책 목록 조회 */
+    handleGetMyBookList = () => {
+        
+        const { AuthActions, MenuActions, MypageActions } = this.props;
+        const self = this;
+
+        axios({
+            url: devtest() + '/book/showUserBook',
+            method: "get",
+            headers: { "Pragma": 'no-cache',
+                        "x-access-token": storage.getToken() }
+        }).then(
+            (res)=>{
+                storage.setSessionObj(res.headers);
+                MypageActions.setMyBookList(res.data);
+            }
+        ).catch(
+            (err)=>{
+                if(err.response.status==999){
+                    alert("로그인이 필요합니다. 로그인 페이지로 이동합니다.");
+                    self.props.history.push("/login");
+                }
+                else if(err.response.status==998){
+                    alert("로그인 시간이 만료되었습니다. 로그인 페이지로 이동합니다.");
+                    //sessionStorage에 userInfo key의 데이터 삭제
+                    storage.removeSessionObj();
+                    storage.removeSerialNumber();
+                    //store의 login데이터 reset
+                    MenuActions.setClickMenu("/login");
+                    AuthActions.logout();
+                    self.props.history.push("/login");
+                }
+                else if(err.response.status==401){
+                    /**/
+                    alert("잘못된 로그인 정보입니다. 로그인 페이지로 이동합니다.");
+                    storage.removeSessionObj();
+                    storage.removeSerialNumber();
+                    //store의 login데이터 reset
+                    MenuActions.setClickMenu("/login");
+                    AuthActions.logout();
+                    self.props.history.push("/login");
+    
+                }else{
+                    alert("알수없는 에러가 발생했습니다. 시스템 담당자에게 문의하세요.")
+                    console.log( err.response);
+                }
+            }
+        )
+
+    }
+
+    handleBookCancel = (e) => {
+
+        const { AuthActions, MenuActions, MypageActions } = this.props;
+        const bookId = e.currentTarget.getAttribute("data-bookid");
+        const self = this;
+        
+        // 책 정보에 찜한 사람 NULL 업데이트
+        axios({
+            url: devtest() + `/book/cancelUserBook/${bookId}`,
+            method: 'put',
+            headers: { "Pragma": 'no-cache',
+                        "x-access-token": storage.getToken() }
+        }).then(
+            (res) => {
+                storage.setSessionObj(res.headers);
+                //self.props.history.push('/mypage');
+                this.handleGetMyBookList();
+            }
+        ).catch(
+            (err)=>{
+                if(err.response.status==999){
+                    alert("로그인이 필요합니다. 로그인 페이지로 이동합니다.");
+                    self.props.history.push("/login");
+                }
+                else if(err.response.status==998){
+                    alert("로그인 시간이 만료되었습니다. 로그인 페이지로 이동합니다.");
+                    //sessionStorage에 userInfo key의 데이터 삭제
+                    storage.removeSessionObj();
+                    storage.removeSerialNumber();
+                    //store의 login데이터 reset
+                    MenuActions.setClickMenu("/login");
+                    AuthActions.logout();
+                    self.props.history.push("/login");
+                }
+                else if(err.response.status==401){
+                    /**/
+                    alert("잘못된 로그인 정보입니다. 로그인 페이지로 이동합니다.");
+                    storage.removeSessionObj();
+                    storage.removeSerialNumber();
+                    //store의 login데이터 reset
+                    MenuActions.setClickMenu("/login");
+                    AuthActions.logout();
+                    self.props.history.push("/login");
+    
+                }else{
+                    alert("알수없는 에러가 발생했습니다. 시스템 담당자에게 문의하세요.")
+                    console.log( err.response);
+                }
+            }
+        )
+    }
 
 
     render() {
-        const { myApplyList, myChoiceList, myQuestionList, questionInfo, coverLetter} = this.props;
+        const { myApplyList, myChoiceList, myQuestionList, questionInfo, coverLetter, myBookList} = this.props;
         const {handleMyApplyToggle
             , handleApplyClose
             , handleMyQuestionToggle
             , handleQuestionClose
             , handleMoveToMyPassword
             , handleNoticeClose
-            , handleGetNotice} = this;
+            , handleGetNotice
+            , handleBookCancel} = this;
         const { clickedQuestion, openApplyPopup, openQuestionPopup, myApplyResultList
             ,clickedNotice} = this.state; 
         return (
@@ -536,7 +642,21 @@ class MyApplyContainer extends Component {
                                 </div>
                             </div>  
                         </div>
-
+                        {/* surim */}
+                        <div className="apply_step4">
+                            <div className="apply_step4_list">
+                                <div>
+                                    <div className="apply_step4_table_title">내가 찜한 책 목록<span>나눔받을 책 목록을 확인해보세요. </span></div>
+                                    <div>
+                                        <div className="line_2_gray"></div>
+                                        <div className="campany_img_area">
+                                            { myBookList.length !== 0  && (<MyBook myBookList={myBookList} handleBookCancel={handleBookCancel}></MyBook>)}
+                                            { myBookList.length === 0&& (<MyBookNotFound></MyBookNotFound>)}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         {/* 나의 지원현황 팝업 */}
                         { openApplyPopup && <MyApplyPopup clickedNotice={clickedNotice} myApplyResultList={myApplyResultList} myChoiceList={myChoiceList} coverLetter={coverLetter} onClose={handleApplyClose} ></MyApplyPopup>}
                         {/* 나의 문의현황 팝업 */}
@@ -561,7 +681,8 @@ export default connect(
         serialNumber : state.apply.get('serialNumber'),
         isLogin: state.auth.get('isLogin'),
         userId: state.auth.get('userId'),
-        userType: state.auth.get('userType')
+        userType: state.auth.get('userType'),
+        myBookList : state.mypage.get("myBookList"),
 
     }), (dispatch) => ({
         MypageActions: bindActionCreators(MypageActions, dispatch),

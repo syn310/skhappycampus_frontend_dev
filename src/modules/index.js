@@ -10,6 +10,7 @@ import recruit from './recruit';
 import auth from './auth';
 import register from './register';
 import company from './company';
+import book from './book';
 
 export default combineReducers({
 
@@ -22,6 +23,7 @@ export default combineReducers({
     recruit,
     auth,
     register,
-    company
+    company,
+    book
 
 })

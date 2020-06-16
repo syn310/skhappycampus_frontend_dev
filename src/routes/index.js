@@ -17,7 +17,11 @@ import {
   FaqContainer,
   RegisterContainer,
   MyPasswordContainer,
-  NoticeContainer
+  NoticeContainer,
+
+  //Surim test
+  SampleContainer,
+  BookContainer
         } from 'containers';
         
   import { RegistForm } from 'components';
@@ -118,5 +122,12 @@ export const publicRoutes = [
     path: "/question/notice",
     component: NoticeContainer
   },
-  
+  {
+    path: "/sample",
+    component: SampleContainer
+  },
+  {
+    path: "/book",
+    component: BookContainer
+  },
 ];
