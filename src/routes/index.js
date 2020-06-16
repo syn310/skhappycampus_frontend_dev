@@ -19,8 +19,6 @@ import {
   MyPasswordContainer,
   NoticeContainer,
 
-  //Surim test
-  SampleContainer,
   BookContainer
         } from 'containers';
         
@@ -121,10 +119,6 @@ export const publicRoutes = [
   {/** 공지사항 페이지 */
     path: "/question/notice",
     component: NoticeContainer
-  },
-  {
-    path: "/sample",
-    component: SampleContainer
   },
   {
     path: "/book",
